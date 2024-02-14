@@ -2,7 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const { Strategy } = require("passport-openidconnect");
 const User = require("../models/user");
-const { updateOrSaveUser } = require("../util/");
+const { updateOrSaveUser } = require("../services/");
 const { PROVIDERS } = require("../util/constants");
 
 passport.serializeUser((user, done) => {

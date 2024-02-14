@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize-config");
 const { PROVIDERS } = require("../util/constants");
+const Provider = require("./provider");
 
 const User = sequelize.define(
   "User",
@@ -35,5 +36,7 @@ const User = sequelize.define(
     modelName: "User",
   }
 );
+
+User.hasMany(Provider);
 
 module.exports = User;

@@ -7,7 +7,6 @@ const session = require("express-session");
 const authRoutes = require("./routes/auth");
 const passport = require("./config/passport-config");
 const sequelize = require("./config/sequelize-config");
-require("./models/associations");
 
 const app = express();
 
