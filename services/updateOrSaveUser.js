@@ -1,7 +1,12 @@
 const User = require("../models/user");
 const Provider = require("../models/provider");
 
-async function updateOrSaveUser(profile, providerType) {
+async function updateOrSaveUser(
+  profile,
+  providerType,
+  accessToken,
+  refreshToken
+) {
   const firstName =
     providerType === "google"
       ? profile.name.givenName
@@ -29,7 +34,14 @@ async function updateOrSaveUser(profile, providerType) {
           UserId: user.id,
           type: providerType,
           providerId: profile.id,
+          accessToken,
+          refreshToken,
         });
+      } else {
+        // Update tokens if they changed
+        provider.accessToken = accessToken;
+        provider.refreshToken = refreshToken;
+        await provider.save();
       }
     } else {
       user = await User.create(
@@ -42,6 +54,8 @@ async function updateOrSaveUser(profile, providerType) {
             {
               type: providerType,
               providerId: profile.id,
+              accessToken,
+              refreshToken,
             },
           ],
         },

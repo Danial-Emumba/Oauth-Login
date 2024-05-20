@@ -27,7 +27,12 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const user = await updateOrSaveUser(profile, PROVIDERS.GOOGLE);
+        const user = await updateOrSaveUser(
+          profile,
+          PROVIDERS.GOOGLE,
+          accessToken,
+          refreshToken
+        );
         done(null, user);
       } catch (error) {
         done(error);
@@ -51,7 +56,12 @@ passport.use(
     },
     async (issuer, profile, done) => {
       try {
-        const user = await updateOrSaveUser(profile, PROVIDERS.OKTA);
+        const user = await updateOrSaveUser(
+          profile,
+          PROVIDERS.OKTA,
+          accessToken,
+          refreshToken
+        );
         done(null, user);
       } catch (error) {
         done(error);
@@ -59,5 +69,24 @@ passport.use(
     }
   )
 );
-
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+          return done(null, false, { message: "Incorrect email" });
+        }
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        if (!isValidPassword) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    }
+  )
+);
 module.exports = passport;
