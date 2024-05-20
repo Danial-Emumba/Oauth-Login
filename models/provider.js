@@ -13,6 +13,14 @@ const Provider = sequelize.define(
       allowNull: false,
       unique: true,
     },
+    accessToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    refreshToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,
