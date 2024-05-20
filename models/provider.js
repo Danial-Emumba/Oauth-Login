@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize-config");
-const { PROVIDERS } = require("../util/constants");
 
 const Provider = sequelize.define(
   "Provider",
