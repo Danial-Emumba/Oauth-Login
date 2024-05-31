@@ -1,5 +1,5 @@
 const authorizationMiddleware = (req, res, next) => {
-  if (req.user && req.user.isAdmin) {
+  if (req.user?.isAdmin) {
     next();
   } else {
     res.status(403).json({ error: "Unauthorized access" });
