@@ -55,4 +55,7 @@ async function updateOrSaveUser(profile, providerType) {
   }
 }
 
-module.exports = updateOrSaveUser;
+async function testFunction() {
+  return "Test function";
+}
+module.exports = { updateOrSaveUser, testFunction };
